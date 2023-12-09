@@ -23,7 +23,7 @@
 
 # Демонстрація
 
-![k3d demo](doc/k3d_demo.gif)
+![k3d demo](k3d_demo.gif)
 
 # Висновки 
 
