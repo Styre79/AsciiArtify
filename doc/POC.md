@@ -10,16 +10,16 @@ $ k3d cluster create argo
 $ kubectl cluster-info
 ```
 
-2. Створюємо namespace (перевіряємо його статус), в який за допомогою скрипта встановлюємо систему, перевіряємо стан системи після встановлення:
+2. Створюємо namespace (перевіряємо його статус), в який за допомогою скрипта встановлюємо систему ArgoCD, перевіряємо стан системи після встановлення:
 
 ```bash
 $ kubectl create namespace argocd
 
-$ k get ns
+$ kubectl get ns
 
 $ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-$ k get all -n argocd
+$ kubectl get all -n argocd
 ```
 
 3. Отримуємо доступ до графічного інтерфейсу(GUІ) ArgoCD:
@@ -30,3 +30,21 @@ $ kubectl port-forward svc/argocd-server -n argocd 8080:443&
 ```
 
 4. Отримаємо початковий пароль для облікового запису адміністратора, який генерується автоматично та зберігається як секрет:
+```bash                                                                                    
+$ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"|base64 -d;echo
+```
+
+Якщо все зроблено правильно, то перейшовши за адресою https://127.0.0.1:8080/ побачимо:
+
+![ArgoCD GUI start page](argo_login.png)
+
+де у поле Login вводимо admin, а у Password копіюємо пароль отриманий у п.4 цієї інструкції.
+
+
+### Демонстрація встановлення та налаштування ArgoCD:
+
+![Встановлення та налаштування ArgoCD](POC_demo1.gif)
+
+### Демонстрація доступу до ArgoCD через Web-інтерфейс:
+
+![Доступ до ArgoCD через Web-інтерфейс](POC_demo2.gif)
